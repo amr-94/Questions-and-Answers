@@ -24,27 +24,26 @@ use Illuminate\Support\Facades\Route;
 
 route::group([
     'middleware' => ['locale'],
-],function(){
+], function () {
 
-        route::prefix('/')->group(function(){
+    route::prefix('/')->group(function () {
         Route::get('/tags', [TagsController::class, 'index'])->name('tags.index')->middleware('admin:admin');
         Route::get('/tags/create', [TagsController::class, 'create'])->name('tags.create')->middleware('admin:admin');
         Route::post('/tags', [TagsController::class, 'store']);
         Route::get('/tags/edit/{id}', [TagsController::class, 'edit'])->name('tags.edit')->middleware('admin:admin');
         route::put('/tags/{id}', [TagsController::class, 'update']);
         Route::delete('/tags/{id}', [TagsController::class, 'destroy'])->name('tags.delete')->middleware('admin:admin');
-
-     });
+    });
 
     route::resource('/questions', QuestionsController::class);
-    route::get('notifications',[NotificationController::class,'index'])->name('notifications')->middleware('auth');
+    route::get('notifications', [NotificationController::class, 'index'])->name('notifications')->middleware('auth');
     route::delete('notifications/delete/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy')->middleware('auth');
     route::delete('notifications/deleteall/', [NotificationController::class, 'destroyall'])->name('notification.destroyall')->middleware('auth');
 
 
 
 
-    Route::get('alluser',[UserProfileController::class,'index'])->middleware('admin:admin','auth')->name('all.user');
+    Route::get('alluser', [UserProfileController::class, 'index'])->middleware('admin:admin', 'auth')->name('all.user');
     Route::put('alluser/admin/{id}', [UserProfileController::class, 'makeadmin'])->middleware('admin:admin', 'auth')->name('user.change');
     Route::delete('user/{id}', [UserProfileController::class, 'destroy'])->middleware('admin:admin', 'auth')->name('user.delete');
 
@@ -59,8 +58,7 @@ route::group([
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified', 'password.confirm'])->name('dashboard');
+})->middleware(['auth', 'password.confirm'])->name('dashboard');
 
 
 require __DIR__ . '/auth.php';
-
