@@ -67,9 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'locale' => \App\Http\Middleware\localization::class,
         'admin' => \App\Http\Middleware\CheckUsers::class,
-
-
-        // 'notify' => \App\Http\Middleware\NotificationAsRead::class,
+        'notify' => \App\Http\Middleware\NotificationAsRead::class,
 
 
     ];

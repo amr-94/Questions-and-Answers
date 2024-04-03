@@ -172,6 +172,8 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
+
+
         questions::destroy($id);
         return redirect(route('questions.index'))->with('success', 'Question Delete');
     }

@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -43,7 +44,12 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+
         ]);
+        // -------------------- notifay  admin about new user registeration ---------------
+        $admin = User::where('type', 'admin')->get();
+        Notification::send($admin, new \App\Notifications\NewuserNotification($user));
+
 
         event(new Registered($user));
 
@@ -51,6 +57,7 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
         // return redirect(route('questions.index'));
+
 
     }
 }
