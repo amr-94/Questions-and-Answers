@@ -5,31 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tags extends Model
+class Tags extends Model
 {
     use HasFactory;
 
 
 
 
-     protected $fillable =[
-         'name','slug'
-     ];
+    protected $fillable = [
+        'name', 'slug'
+    ];
 
 
 
-     public function questions()
-     {
-         return $this->belongsToMany(
-            questions::class,
+    public function questions()
+    {
+        return $this->belongsToMany(
+            Questions::class,
             'question_id',
-              'tag_id',
-             'question_id',
-                 'id',
-                 'id',
-         );
-
-     }
-
-
+            'tag_id',
+            'question_id',
+            'id',
+            'id',
+        );
+    }
 }

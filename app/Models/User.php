@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','profile_photo_path','city','last_name','type'
+        'name', 'email', 'password', 'profile_photo_path', 'city', 'last_name', 'type'
     ];
 
     /**
@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'notification_options'=> 'json',
+        'notification_options' => 'json',
 
     ];
 
@@ -46,19 +46,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function questions()
     {
-        return $this->hasMany(questions::class,'user_id','id');
+        return $this->hasMany(Questions::class, 'user_id', 'id');
     }
 
 
 
     public function answers()
     {
-        return $this->hasMany(answer::class, 'user_id', 'id');
+        return $this->hasMany(Answer::class, 'user_id', 'id');
     }
 
 
-           //one to one relation
-      public function profile(){
-        return $this->hasOne(profile::class,'user_id','id');
+    //one to one relation
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
     }
 }

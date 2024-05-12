@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notification;
 class NewAnswerNotification extends Notification
 {
     protected $questions;
-    protected $user ;
+    protected $user;
     use Queueable;
 
     /**
@@ -20,7 +20,7 @@ class NewAnswerNotification extends Notification
      *
      * @return void
      */
-    public function __construct(questions $questions , User $user)
+    public function __construct(Questions $questions, User $user)
     {
         //
         $this->questions = $questions;
@@ -36,7 +36,7 @@ class NewAnswerNotification extends Notification
     // notification channel : mail , database , nexmo (sms), brodcast
     public function via($notifiable)
     {
-        $channels = ['database','mail'];
+        $channels = ['database', 'mail'];
         // if (in_array('mail' , $notifiable->notification_options)){
         //     $channels[] = 'mail' ;
         // }
@@ -67,25 +67,24 @@ class NewAnswerNotification extends Notification
             ]))
             ->action('view Answer', url(route('questions.show', $this->questions->id)))
             ->line('Thank you for using our application!');
-
-
     }
 
 
 
 
 
-    public function toDatabase($notifiable){
-       return [
-                 'title' => 'New Answer Added ',
-                 'body'=>  __(':user has added answer to your questions ":questions"',[
-                      'user' =>$this->user->name ,
-                          'questions' => $this->questions->title,
-                 ]),
-                 'image'=>'',
-                 'url' => route('questions.show',$this->questions->id),
-                 'user'  =>  $this->user->name ,
-       ];
+    public function toDatabase($notifiable)
+    {
+        return [
+            'title' => 'New Answer Added ',
+            'body' =>  __(':user has added answer to your questions ":questions"', [
+                'user' => $this->user->name,
+                'questions' => $this->questions->title,
+            ]),
+            'image' => '',
+            'url' => route('questions.show', $this->questions->id),
+            'user'  =>  $this->user->name,
+        ];
     }
 
     /**

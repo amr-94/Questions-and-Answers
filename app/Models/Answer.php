@@ -5,20 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class answer extends Model
+class Answer extends Model
 {
     use HasFactory;
-    protected $fillable =[
-        'description','qusetion_id','user_id'
+    protected $fillable = [
+        'description', 'qusetion_id', 'user_id'
     ];
 
-    public function question(){
-        return $this->belongsTo(questions::class,'question_id','id');
+    public function question()
+    {
+        return $this->belongsTo(Questions::class, 'question_id', 'id');
     }
 
 
     public function user()
     {
-        return $this->belongsTo(user::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

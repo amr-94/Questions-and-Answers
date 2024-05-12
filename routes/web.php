@@ -35,6 +35,7 @@ route::group([
         Route::delete('/tags/{id}', [TagsController::class, 'destroy'])->name('tags.delete')->middleware('admin:admin');
     });
 
+    route::get('/', [QuestionsController::class, 'index'])->name('questions.index');
     route::resource('/questions', QuestionsController::class);
     route::get('notifications', [NotificationController::class, 'index'])->name('notifications')->middleware('auth');
     route::delete('notifications/delete/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy')->middleware('auth');
