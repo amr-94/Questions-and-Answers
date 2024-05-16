@@ -26,7 +26,7 @@ class QuestionsController extends Controller
         $search = request('search');
 
 
-        $questions = questions::with('user')
+        $questions = Questions::with('user')
             ->withCount('answers')
             ->where('title', 'like', '%' . $search . '%')
             ->orWhereHas('tags', function ($q) use ($search) {
@@ -55,7 +55,7 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        $tags = tags::all();
+        $tags = Tags::all();
         return view('questions.create', [
             'tags' => $tags
         ]);
@@ -85,7 +85,7 @@ class QuestionsController extends Controller
 
         ]);
 
-        $questions = questions::create($request->all());
+        $questions = Questions::create($request->all());
         $questions->tags()->attach($request->input('tags'));
 
         return redirect()->route('questions.index')
@@ -100,7 +100,7 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        $questions =  questions::findorfail($id);
+        $questions =  Questions::findorfail($id);
         $answer = $questions->answers()->latest()->with('user')->get();
         return view('questions.show', [
             'question' => $questions,
@@ -116,8 +116,8 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        $tags = tags::all();
-        $questions =  questions::findorfail($id);
+        $tags = Tags::all();
+        $questions =  Questions::findorfail($id);
         $question_tag = $questions->tags()->pluck('id')->toArray();
         return view('questions.edit', [
             'question' => $questions,
@@ -144,7 +144,7 @@ class QuestionsController extends Controller
             'tags' => ['required', 'array'],
         ]);
 
-        $questions = questions::findorfail($id);
+        $questions = Questions::findorfail($id);
         $prev = $questions->img;
 
         if ($request->hasfile('q_img')) {
@@ -174,7 +174,7 @@ class QuestionsController extends Controller
     {
 
 
-        questions::destroy($id);
+        Questions::destroy($id);
         return redirect(route('questions.index'))->with('success', 'Question Delete');
     }
 }
